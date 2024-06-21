@@ -5,7 +5,6 @@ import { Todo } from '../todo.model';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent implements OnInit {
   todos: Todo[] = [];
@@ -13,22 +12,20 @@ export class TodoComponent implements OnInit {
 
   constructor(private todoService: TodoService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.todos = this.todoService.getTodos();
   }
 
-  addTodo() {
+  addTodo(): void {
     if (this.newTodoTitle.trim()) {
       this.todoService.addTodo(this.newTodoTitle);
       this.newTodoTitle = '';
+      this.todos = this.todoService.getTodos(); // Refresh the list
     }
   }
 
-  toggleTodoCompletion(id: number) {
+  toggleTodoCompletion(id: number): void {
     this.todoService.toggleTodoCompletion(id);
-  }
-
-  deleteTodo(id: number) {
-    this.todoService.deleteTodo(id);
+    this.todos = this.todoService.getTodos(); // Refresh the list
   }
 }

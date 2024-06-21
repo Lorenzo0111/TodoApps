@@ -5,34 +5,43 @@ import { Todo } from './todo.model';
   providedIn: 'root',
 })
 export class TodoService {
-  private todos: Todo[] = [
-    { id: 1, title: 'Learn Angular', completed: false },
-    { id: 2, title: 'Build a Todo App', completed: false },
-  ];
+  private todos: Todo[] = [];
+  private storageKey = 'todos';
 
-  constructor() {}
+  constructor() {
+    this.loadTodos();
+  }
 
-  getTodos() {
+  private loadTodos(): void {
+    const savedTodos = localStorage.getItem(this.storageKey);
+    if (savedTodos) {
+      this.todos = JSON.parse(savedTodos);
+    }
+  }
+
+  private saveTodos(): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(this.todos));
+  }
+
+  getTodos(): Todo[] {
     return this.todos;
   }
 
-  addTodo(title: string) {
+  addTodo(title: string): void {
     const newTodo: Todo = {
-      id: this.todos.length + 1,
+      id: this.todos.length ? this.todos[this.todos.length - 1].id + 1 : 1,
       title: title,
       completed: false,
     };
     this.todos.push(newTodo);
+    this.saveTodos();
   }
 
-  toggleTodoCompletion(id: number) {
+  toggleTodoCompletion(id: number): void {
     const todo = this.todos.find((todo) => todo.id === id);
     if (todo) {
       todo.completed = !todo.completed;
+      this.saveTodos();
     }
-  }
-
-  deleteTodo(id: number) {
-    this.todos = this.todos.filter((todo) => todo.id !== id);
   }
 }

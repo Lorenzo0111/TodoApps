@@ -11,9 +11,12 @@ const { data: todos, refresh } = await useFetch<Todo[]>("/api/list");
   <div class="xl:rounded-xl xl:border w-full xl:w-1/3 p-4">
     <div class="flex justify-between items-center w-full">
       <h1 class="text-3xl font-bold">
-        ToDo App <span class="font-light text-lg">({{ data.user.name }})</span>
+        ToDo App
+        <span class="font-light text-lg">({{ data?.user?.name }})</span>
       </h1>
-      <button @click="signOut" class="bg-green-500 rounded-lg p-2">Sign Out</button>
+      <button @click="() => signOut()" class="bg-green-500 rounded-lg p-2">
+        Sign Out
+      </button>
     </div>
     <div class="w-full mt-5">
       <Todo

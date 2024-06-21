@@ -1,5 +1,8 @@
-<div class="todo-item">
-  <input type="checkbox" [checked]="todo.completed" (change)="toggleCompletion()" />
-  <span [class.completed]="todo.completed">{{ todo.title }}</span>
-  <button (click)="deleteTodo()">Delete</button>
+<div class="flex flex-row gap-1 items-center p-1">
+  <input
+    type="checkbox"
+    [checked]="todo.completed"
+    (change)="toggleCompletion()"
+  />
+  <span [class.line-through]="todo.completed">{{ todo.title }}</span>
 </div>
