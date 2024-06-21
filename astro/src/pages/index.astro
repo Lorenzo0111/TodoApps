@@ -1,0 +1,35 @@
+---
+import { prisma } from "../../prisma/db";
+import AddInput from "../components/AddInput.astro";
+import Todo from "../components/Todo.vue";
+import Layout from "../layouts/Layout.astro";
+
+if (Astro.request.method === "POST") {
+  const body = await Astro.request.formData();
+  const title = body.get("title");
+
+  if (title && typeof title === "string") {
+    await prisma.todo.create({
+      data: { title },
+    });
+
+    return Astro.redirect("/");
+  }
+}
+
+const todos = await prisma.todo.findMany();
+---
+
+<Layout title="Todo App">
+  <div class="xl:rounded-xl xl:border w-full xl:w-1/3 p-4">
+    <h1 class="text-3xl font-bold">ToDo App</h1>
+    <div class="w-full mt-5">
+      {
+        todos.map((todo) => (
+          <Todo title={todo.title} done={todo.done} id={todo.id} client:load />
+        ))
+      }
+      <AddInput />
+    </div>
+  </div>
+</Layout>
