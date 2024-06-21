@@ -12,4 +12,5 @@ model Todo {
   title     String
   done      Boolean  @default(false)
   createdAt DateTime @default(now())
+  userEmail String
 }

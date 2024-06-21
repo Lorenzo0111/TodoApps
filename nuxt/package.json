@@ -12,6 +12,8 @@
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@prisma/client": "5.15.1",
+    "@sidebase/nuxt-auth": "^0.7.2",
+    "next-auth": "4.21.1",
     "nuxt": "^3.12.2",
     "prisma": "^5.15.1",
     "vue": "^3.4.29",
