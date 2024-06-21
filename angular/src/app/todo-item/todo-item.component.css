@@ -1,0 +1,11 @@
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.todo-item .completed {
+  text-decoration: line-through;
+  color: gray;
+}
