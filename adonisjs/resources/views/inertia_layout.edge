@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title inertia>AdonisJS x Inertia x React</title>
+
+  @viteReactRefresh()
+  @inertiaHead()
+  @vite(['inertia/app/app.tsx', `inertia/pages/${page.component}.tsx`])
+
+  <style>
+    #app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  @inertia()
+</body>
+
+</html>
