@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+      integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      input {
+        margin-top: 0.5rem;
+        height: 2.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        width: 100%;
+      }
+
+      label {
+        display: none;
+      }
+
+      form > div {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex flex-col justify-center items-center w-full">
+    <div class="xl:rounded-xl xl:border xl:w-1/3 w-full p-4">
+      <h1 class="text-3xl font-bold">ToDo App</h1>
+
+      <div class="w-full mt-5">
+        {% for i in list %}
+
+        <div class="flex flex-row gap-1 items-center p-1">
+          <form
+            id="form-{{i.id}}"
+            action="/del/{{i.id}}"
+            method="POST"
+            class="flex"
+          >
+            {% csrf_token %}
+            <input
+              onchange="handleCheckboxChange('{{i.id}}')"
+              type="checkbox"
+            />
+          </form>
+          <span>{{i.title}}</span>
+        </div>
+        {% endfor%}
+
+        <form method="POST" class="flex gap-2 w-full items-end">
+          {% csrf_token %} {{forms}}
+
+          <button type="submit" class="bg-green-500 rounded-lg p-2">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function handleCheckboxChange(id) {
+        $(`#form-${id}`).submit();
+      }
+    </script>
+  </body>
+</html>
