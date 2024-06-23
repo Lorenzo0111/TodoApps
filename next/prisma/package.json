@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "5.15.1",
+    "@auth/prisma-adapter": "^2.4.1",
+    "@prisma/client": "^5.15.1",
     "@types/node": "20.14.8",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
@@ -17,6 +18,7 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.4",
     "next": "14.2.4",
+    "next-auth": "^5.0.0-beta.19",
     "postcss": "8.4.38",
     "react": "18.3.1",
     "react-dom": "18.3.1",
@@ -25,6 +27,5 @@
   },
   "devDependencies": {
     "prisma": "^5.15.1"
-  },
-  "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
+  }
 }

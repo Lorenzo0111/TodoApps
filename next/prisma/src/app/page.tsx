@@ -1,14 +1,29 @@
+import Login from "@/components/Login";
+import Logout from "@/components/Logout";
 import Todo from "@/components/Todo";
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export default async function Home() {
-  const todos = await prisma.todo.findMany();
+  const session = await auth();
+
+  if (!session?.user) return <Login />;
+
+  const todos = await prisma.todo.findMany({
+    where: { userId: session.user.id },
+  });
 
   return (
     <div className="flex min-h-screen flex-col justify-center items-center w-full">
       <div className="xl:rounded-xl xl:border w-full xl:w-1/3 p-4">
-        <h1 className="text-3xl font-bold">ToDo App</h1>
+        <div className="flex justify-between items-center w-full">
+          <h1 className="text-3xl font-bold">
+            ToDo App
+            <span className="font-light text-lg">({session.user.name})</span>
+          </h1>
+          <Logout />
+        </div>
 
         <div className="w-full mt-5">
           {todos.map((todo) => (
@@ -19,16 +34,20 @@ export default async function Home() {
             action={async (data) => {
               "use server";
 
+              const session = await auth();
+              if (!session?.user?.id) return;
+
               const title = data.get("title");
               if (!title || typeof title !== "string") return;
 
               await prisma.todo.create({
                 data: {
                   title,
+                  userId: session.user.id,
                 },
               });
 
-              revalidatePath("/");
+              revalidatePath("/", "page");
             }}
           >
             <input
